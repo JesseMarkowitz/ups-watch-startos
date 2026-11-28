@@ -6,7 +6,7 @@ export const taskConfigureUps = sdk.setupOnInit(async (effects, kind) => {
   if (kind !== 'install') return
   await sdk.action.createOwnTask(effects, configureUps, 'important', {
     reason: i18n(
-      'First turn on "Other clients can monitor" in System > UPS Monitor, or UPS Watch cannot read the UPS. Then confirm the UPS settings here.',
+      'If this server has System > UPS Monitor, first turn on "Other clients can monitor" there, or UPS Watch cannot read the UPS. If it has no UPS Monitor, choose Another NUT server here. Then confirm the UPS settings.',
     ),
   })
 })

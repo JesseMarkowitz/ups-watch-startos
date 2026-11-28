@@ -16,7 +16,7 @@ export const manifest = setupManifest({
   },
   images: {
     grafana: {
-      source: { dockerTag: 'grafana/grafana:13.3.1' },
+      source: { dockerTag: 'grafana/grafana:13.3.2' },
       arch: ['x86_64', 'aarch64'],
     },
     prometheus: {

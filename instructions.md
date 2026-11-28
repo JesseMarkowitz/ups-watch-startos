@@ -2,7 +2,7 @@
 
 UPS Watch shows its charts in **Grafana**. Opening the service's **Grafana** interface takes you to a Grafana login page titled "UPS Watch".
 
-UPS Watch only reads the UPS. Safe shutdown stays with StartOS's own **UPS Monitor**, which must be set up first.
+UPS Watch only reads the UPS. Safe shutdown stays with StartOS's own **UPS Monitor**, under **System**. If this server has no UPS Monitor, UPS Watch can still read a UPS that another machine shares over the network, such as another StartOS server.
 
 ## Documentation
 
@@ -19,17 +19,17 @@ UPS Watch only reads the UPS. Safe shutdown stays with StartOS's own **UPS Monit
 
 ## Getting set up
 
-First, in StartOS under **System**:
+First, make the UPS readable:
 
-1. Open **System > UPS Monitor** and connect your UPS if you have not already.
-2. In the same place, turn on **Other clients can monitor**. UPS Watch cannot read the UPS without it.
+- **If this server has System > UPS Monitor**, open it, connect your UPS if you have not already, and turn on **Other clients can monitor**. UPS Watch cannot read the UPS without it.
+- **If this server has no UPS Monitor**, or the UPS is connected to another machine, set that machine up to share the UPS over the network. On another StartOS server, that means turning on **Other clients can monitor** in its UPS Monitor.
 
 Then, on the UPS Watch service dashboard:
 
-3. Run **Set Admin Password**. It shows the username and a new password for Grafana. Copy the password somewhere safe: it is shown only once.
-4. Start the service. Within a few seconds the **UPS** line shows the current charge and runtime.
-5. Run **Configure UPS** and confirm the settings. The defaults read the UPS connected to this server and name it after the server.
-6. Open the **Grafana** interface and sign in.
+1. Run **Set Admin Password**. It shows the username and a new password for Grafana. Copy the password somewhere safe: it is shown only once.
+2. Start the service.
+3. Run **Configure UPS** and confirm the settings. The defaults read the UPS connected to this server and name it after the server. For a UPS on another machine, choose **Another NUT server** and enter that machine's address.
+4. Within a few seconds the **UPS** line on the service dashboard shows the current charge and runtime. Open the **Grafana** interface and sign in.
 
 > **Other clients can monitor** opens the UPS readings (port 3493) to every network this server is on. The readings need no password; the password shown in UPS Monitor only protects shutdown coordination. Turn it on only on networks you trust.
 

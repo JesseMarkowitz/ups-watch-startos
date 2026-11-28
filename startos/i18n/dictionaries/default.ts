@@ -9,7 +9,7 @@ const dict = {
   'Grafana is ready': 4,
   'Grafana is not ready': 5,
   'The UPS did not answer. Trying again.': 6,
-  'UPS unreachable. In System > UPS Monitor, check that a UPS is connected and "Other clients can monitor" is on.': 7,
+  'UPS unreachable. In System > UPS Monitor, check that a UPS is connected and "Other clients can monitor" is on. If this server has no UPS Monitor, choose Another NUT server in Configure UPS.': 7,
   'UPS unreachable at ${host}. Check the address in Configure UPS and that the NUT server accepts network clients.': 8,
   'On battery.': 9,
   'On wall power.': 10,
@@ -80,7 +80,7 @@ const dict = {
   'Set History Retention': 68,
   'Choose how long UPS readings are kept.': 69,
   // init/taskConfigureUps.ts
-  'First turn on "Other clients can monitor" in System > UPS Monitor, or UPS Watch cannot read the UPS. Then confirm the UPS settings here.': 70,
+  'If this server has System > UPS Monitor, first turn on "Other clients can monitor" there, or UPS Watch cannot read the UPS. If it has no UPS Monitor, choose Another NUT server here. Then confirm the UPS settings.': 70,
   // init/watchCredentials.ts
   'Create the login for Grafana': 71,
   // actions/configureUps.ts (location)

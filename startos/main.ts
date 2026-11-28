@@ -282,7 +282,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
                   message:
                     ups.host === localUps.host
                       ? i18n(
-                          'UPS unreachable. In System > UPS Monitor, check that a UPS is connected and "Other clients can monitor" is on.',
+                          'UPS unreachable. In System > UPS Monitor, check that a UPS is connected and "Other clients can monitor" is on. If this server has no UPS Monitor, choose Another NUT server in Configure UPS.',
                         )
                       : i18n(
                           'UPS unreachable at ${host}. Check the address in Configure UPS and that the NUT server accepts network clients.',

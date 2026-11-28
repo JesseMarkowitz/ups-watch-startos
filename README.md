@@ -90,7 +90,7 @@ Grafana is configured only through environment variables, applied on every start
 
 None. The package reads the NUT service that StartOS itself runs for **System > UPS Monitor**, which is part of the OS and not a package.
 
-That service must be reachable. On the server that has the UPS, **Other clients can monitor** must be on: with it off, StartOS's NUT server listens on loopback only and the package's container cannot reach it. If the server is a NUT client of another machine, it runs no NUT server at all, and Configure UPS must point at that other machine.
+That service must be reachable. On the server that has the UPS, **Other clients can monitor** must be on: with it off, StartOS's NUT server listens on loopback only and the package's container cannot reach it. If the server is a NUT client of another machine, it runs no NUT server at all, and Configure UPS must point at that other machine. The same holds on a StartOS release whose System menu has no UPS Monitor: there is no local NUT server, so **This server** cannot work and Configure UPS must use **Another NUT server**. The package cannot detect which case it is in, so the install task and the `ups` failure message name both.
 
 ## Network Access and Interfaces
 
@@ -166,7 +166,7 @@ Two tasks are raised. Only the first blocks the service.
 | `set-admin-password` | critical  | `adminPasswordSet` is false | running Set Admin Password | no, short of deleting `store.json` |
 | `configure-ups`      | important | at install only             | running Configure UPS once | no                                 |
 
-The `configure-ups` task exists to tell the user to turn on **Other clients can monitor**. Running the action clears the task whether or not the UPS is reachable; the `ups` health check is what reports that.
+The `configure-ups` task exists to tell the user to turn on **Other clients can monitor**, or, on a server without UPS Monitor, to choose **Another NUT server**. Running the action clears the task whether or not the UPS is reachable; the `ups` health check is what reports that.
 
 ## Health Checks
 
@@ -183,7 +183,7 @@ Three checks are shown. The `ups` check is also where alerts are sent from.
 - **Success**, "On wall power. Charge N%, about M min of runtime."
 - **Loading**, "On battery. …" — the UPS is running on battery. This is a power outage, not a fault in the service.
 - **Loading**, "The UPS did not answer. Trying again." — one or two failed reads.
-- **Failure**, "UPS unreachable…" — three failed reads in a row. On the default address the usual causes are that **Other clients can monitor** is off, no UPS is connected in UPS Monitor, or the UPS's USB cable is out. On a custom address, check the address and that the NUT server accepts network clients.
+- **Failure**, "UPS unreachable…" — three failed reads in a row. On the default address the usual causes are that **Other clients can monitor** is off, no UPS is connected in UPS Monitor, the UPS's USB cable is out, or the server has no UPS Monitor at all (the message then points to **Another NUT server**). On a custom address, check the address and that the NUT server accepts network clients.
 
 Alerts are sent once per change of state:
 
@@ -210,7 +210,7 @@ A restore brings back the history, the settings, the alert state and the Grafana
 2. The NUT server's port is fixed per install, not per UPS.
 3. Readings are taken without a NUT login. A NUT server that demands a login for reads is not supported.
 4. Grafana's own alerting is not configured. It works if set up by hand in Grafana, but nothing connects it to StartOS notifications, and no SMTP settings are passed to Grafana.
-5. The shipped UPS charts are read-only and is replaced on update.
+5. The shipped UPS charts are read-only and are replaced on update.
 6. Alerts depend on the server having power and a network path. For an alert to leave the building during an outage, the router and modem must also be on battery.
 7. Wattage is calculated as load percentage times the UPS's nominal power, because many UPS models report no measured power. It is empty for a UPS that reports neither.
 8. An ntfy server or webhook on the same StartOS server can be reached only by an address the container can resolve and whose certificate it trusts. A `.local` address does not work.
